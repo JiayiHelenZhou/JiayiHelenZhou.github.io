@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Plotly</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="plotly.html">Plotly</a>
+</li>
+<li>
+  <a href="mailto:&lt;jz3336@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/JiayiHelenZhou/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Plotly</h1>
+
+</div>
+
+
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(p8105.datasets)
+
+library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>data(&quot;instacart&quot;)</code></pre>
+<pre class="r"><code>instacart %&gt;% 
+  count(aisle) %&gt;% 
+  filter(n &gt; 10000) %&gt;% 
+  mutate( 
+    aisle = factor(aisle),
+    aisle = fct_reorder(aisle, n)
+    ) %&gt;% 
+  plot_ly(x = ~aisle, y = ~n, color = ~aisle, type = &quot;bar&quot;, colors = &quot;viridis&quot;)</code></pre>
+<pre><code>## Warning: `arrange_()` is deprecated as of dplyr 0.7.0.
+## Please use `arrange()` instead.
+## See vignette(&#39;programming&#39;) for more help
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div id="htmlwidget-b88f6bfb592146a72a58" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b88f6bfb592146a72a58">{"x":{"visdat":{"427d7fc68048":["function () ","plotlyVisDat"]},"cur_data":"427d7fc68048","attrs":{"427d7fc68048":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"aisle","type":"category","categoryorder":"array","categoryarray":["butter","oils vinegars","dry pasta","candy chocolate","canned meals beans","spreads","cream","nuts seeds dried fruit","canned jarred vegetables","paper goods","hot dogs bacon sausage","other creams cheeses","baking ingredients","baby food formula","packaged produce","juice nectars","soup broth bouillon","fresh dips tapenades","fresh herbs","cereal","soft drinks","lunch meat","energy granola bars","frozen meals","crackers","eggs","frozen produce","ice cream ice","refrigerated","bread","soy lactosefree","chips pretzels","milk","water seltzer sparkling water","packaged cheese","yogurt","packaged vegetables fruits","fresh fruits","fresh vegetables"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"n"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["butter"],"y":[10575],"type":"bar","name":"butter","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["oils vinegars"],"y":[10620],"type":"bar","name":"oils vinegars","marker":{"color":"rgba(70,11,94,1)","line":{"color":"rgba(70,11,94,1)"}},"textfont":{"color":"rgba(70,11,94,1)"},"error_y":{"color":"rgba(70,11,94,1)"},"error_x":{"color":"rgba(70,11,94,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["dry pasta"],"y":[11298],"type":"bar","name":"dry pasta","marker":{"color":"rgba(72,21,103,1)","line":{"color":"rgba(72,21,103,1)"}},"textfont":{"color":"rgba(72,21,103,1)"},"error_y":{"color":"rgba(72,21,103,1)"},"error_x":{"color":"rgba(72,21,103,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["candy chocolate"],"y":[11453],"type":"bar","name":"candy chocolate","marker":{"color":"rgba(72,29,111,1)","line":{"color":"rgba(72,29,111,1)"}},"textfont":{"color":"rgba(72,29,111,1)"},"error_y":{"color":"rgba(72,29,111,1)"},"error_x":{"color":"rgba(72,29,111,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["canned meals beans"],"y":[11774],"type":"bar","name":"canned meals beans","marker":{"color":"rgba(72,38,119,1)","line":{"color":"rgba(72,38,119,1)"}},"textfont":{"color":"rgba(72,38,119,1)"},"error_y":{"color":"rgba(72,38,119,1)"},"error_x":{"color":"rgba(72,38,119,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["spreads"],"y":[12102],"type":"bar","name":"spreads","marker":{"color":"rgba(71,47,125,1)","line":{"color":"rgba(71,47,125,1)"}},"textfont":{"color":"rgba(71,47,125,1)"},"error_y":{"color":"rgba(71,47,125,1)"},"error_x":{"color":"rgba(71,47,125,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["cream"],"y":[12356],"type":"bar","name":"cream","marker":{"color":"rgba(69,55,129,1)","line":{"color":"rgba(69,55,129,1)"}},"textfont":{"color":"rgba(69,55,129,1)"},"error_y":{"color":"rgba(69,55,129,1)"},"error_x":{"color":"rgba(69,55,129,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["nuts seeds dried fruit"],"y":[12532],"type":"bar","name":"nuts seeds dried fruit","marker":{"color":"rgba(66,63,133,1)","line":{"color":"rgba(66,63,133,1)"}},"textfont":{"color":"rgba(66,63,133,1)"},"error_y":{"color":"rgba(66,63,133,1)"},"error_x":{"color":"rgba(66,63,133,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["canned jarred vegetables"],"y":[12679],"type":"bar","name":"canned jarred vegetables","marker":{"color":"rgba(63,71,136,1)","line":{"color":"rgba(63,71,136,1)"}},"textfont":{"color":"rgba(63,71,136,1)"},"error_y":{"color":"rgba(63,71,136,1)"},"error_x":{"color":"rgba(63,71,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["paper goods"],"y":[12694],"type":"bar","name":"paper goods","marker":{"color":"rgba(61,78,138,1)","line":{"color":"rgba(61,78,138,1)"}},"textfont":{"color":"rgba(61,78,138,1)"},"error_y":{"color":"rgba(61,78,138,1)"},"error_x":{"color":"rgba(61,78,138,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["hot dogs bacon sausage"],"y":[12813],"type":"bar","name":"hot dogs bacon sausage","marker":{"color":"rgba(57,85,140,1)","line":{"color":"rgba(57,85,140,1)"}},"textfont":{"color":"rgba(57,85,140,1)"},"error_y":{"color":"rgba(57,85,140,1)"},"error_x":{"color":"rgba(57,85,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["other creams cheeses"],"y":[12820],"type":"bar","name":"other creams cheeses","marker":{"color":"rgba(54,93,141,1)","line":{"color":"rgba(54,93,141,1)"}},"textfont":{"color":"rgba(54,93,141,1)"},"error_y":{"color":"rgba(54,93,141,1)"},"error_x":{"color":"rgba(54,93,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["baking ingredients"],"y":[13088],"type":"bar","name":"baking ingredients","marker":{"color":"rgba(50,100,142,1)","line":{"color":"rgba(50,100,142,1)"}},"textfont":{"color":"rgba(50,100,142,1)"},"error_y":{"color":"rgba(50,100,142,1)"},"error_x":{"color":"rgba(50,100,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["baby food formula"],"y":[13198],"type":"bar","name":"baby food formula","marker":{"color":"rgba(48,106,142,1)","line":{"color":"rgba(48,106,142,1)"}},"textfont":{"color":"rgba(48,106,142,1)"},"error_y":{"color":"rgba(48,106,142,1)"},"error_x":{"color":"rgba(48,106,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["packaged produce"],"y":[13460],"type":"bar","name":"packaged produce","marker":{"color":"rgba(45,113,142,1)","line":{"color":"rgba(45,113,142,1)"}},"textfont":{"color":"rgba(45,113,142,1)"},"error_y":{"color":"rgba(45,113,142,1)"},"error_x":{"color":"rgba(45,113,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["juice nectars"],"y":[14350],"type":"bar","name":"juice nectars","marker":{"color":"rgba(42,119,142,1)","line":{"color":"rgba(42,119,142,1)"}},"textfont":{"color":"rgba(42,119,142,1)"},"error_y":{"color":"rgba(42,119,142,1)"},"error_x":{"color":"rgba(42,119,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["soup broth bouillon"],"y":[15109],"type":"bar","name":"soup broth bouillon","marker":{"color":"rgba(40,125,142,1)","line":{"color":"rgba(40,125,142,1)"}},"textfont":{"color":"rgba(40,125,142,1)"},"error_y":{"color":"rgba(40,125,142,1)"},"error_x":{"color":"rgba(40,125,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["fresh dips tapenades"],"y":[15142],"type":"bar","name":"fresh dips tapenades","marker":{"color":"rgba(37,131,142,1)","line":{"color":"rgba(37,131,142,1)"}},"textfont":{"color":"rgba(37,131,142,1)"},"error_y":{"color":"rgba(37,131,142,1)"},"error_x":{"color":"rgba(37,131,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["fresh herbs"],"y":[16052],"type":"bar","name":"fresh herbs","marker":{"color":"rgba(35,138,141,1)","line":{"color":"rgba(35,138,141,1)"}},"textfont":{"color":"rgba(35,138,141,1)"},"error_y":{"color":"rgba(35,138,141,1)"},"error_x":{"color":"rgba(35,138,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["cereal"],"y":[16201],"type":"bar","name":"cereal","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"textfont":{"color":"rgba(33,144,141,1)"},"error_y":{"color":"rgba(33,144,141,1)"},"error_x":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["soft drinks"],"y":[16279],"type":"bar","name":"soft drinks","marker":{"color":"rgba(31,150,139,1)","line":{"color":"rgba(31,150,139,1)"}},"textfont":{"color":"rgba(31,150,139,1)"},"error_y":{"color":"rgba(31,150,139,1)"},"error_x":{"color":"rgba(31,150,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["lunch meat"],"y":[16957],"type":"bar","name":"lunch meat","marker":{"color":"rgba(30,157,137,1)","line":{"color":"rgba(30,157,137,1)"}},"textfont":{"color":"rgba(30,157,137,1)"},"error_y":{"color":"rgba(30,157,137,1)"},"error_x":{"color":"rgba(30,157,137,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["energy granola bars"],"y":[17449],"type":"bar","name":"energy granola bars","marker":{"color":"rgba(32,163,134,1)","line":{"color":"rgba(32,163,134,1)"}},"textfont":{"color":"rgba(32,163,134,1)"},"error_y":{"color":"rgba(32,163,134,1)"},"error_x":{"color":"rgba(32,163,134,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["frozen meals"],"y":[18221],"type":"bar","name":"frozen meals","marker":{"color":"rgba(35,169,131,1)","line":{"color":"rgba(35,169,131,1)"}},"textfont":{"color":"rgba(35,169,131,1)"},"error_y":{"color":"rgba(35,169,131,1)"},"error_x":{"color":"rgba(35,169,131,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["crackers"],"y":[19592],"type":"bar","name":"crackers","marker":{"color":"rgba(41,175,127,1)","line":{"color":"rgba(41,175,127,1)"}},"textfont":{"color":"rgba(41,175,127,1)"},"error_y":{"color":"rgba(41,175,127,1)"},"error_x":{"color":"rgba(41,175,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["eggs"],"y":[19875],"type":"bar","name":"eggs","marker":{"color":"rgba(50,182,122,1)","line":{"color":"rgba(50,182,122,1)"}},"textfont":{"color":"rgba(50,182,122,1)"},"error_y":{"color":"rgba(50,182,122,1)"},"error_x":{"color":"rgba(50,182,122,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["frozen produce"],"y":[22453],"type":"bar","name":"frozen produce","marker":{"color":"rgba(60,187,117,1)","line":{"color":"rgba(60,187,117,1)"}},"textfont":{"color":"rgba(60,187,117,1)"},"error_y":{"color":"rgba(60,187,117,1)"},"error_x":{"color":"rgba(60,187,117,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["ice cream ice"],"y":[22676],"type":"bar","name":"ice cream ice","marker":{"color":"rgba(72,193,110,1)","line":{"color":"rgba(72,193,110,1)"}},"textfont":{"color":"rgba(72,193,110,1)"},"error_y":{"color":"rgba(72,193,110,1)"},"error_x":{"color":"rgba(72,193,110,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["refrigerated"],"y":[23228],"type":"bar","name":"refrigerated","marker":{"color":"rgba(86,198,103,1)","line":{"color":"rgba(86,198,103,1)"}},"textfont":{"color":"rgba(86,198,103,1)"},"error_y":{"color":"rgba(86,198,103,1)"},"error_x":{"color":"rgba(86,198,103,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["bread"],"y":[23635],"type":"bar","name":"bread","marker":{"color":"rgba(100,203,94,1)","line":{"color":"rgba(100,203,94,1)"}},"textfont":{"color":"rgba(100,203,94,1)"},"error_y":{"color":"rgba(100,203,94,1)"},"error_x":{"color":"rgba(100,203,94,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["soy lactosefree"],"y":[26240],"type":"bar","name":"soy lactosefree","marker":{"color":"rgba(116,208,85,1)","line":{"color":"rgba(116,208,85,1)"}},"textfont":{"color":"rgba(116,208,85,1)"},"error_y":{"color":"rgba(116,208,85,1)"},"error_x":{"color":"rgba(116,208,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["chips pretzels"],"y":[31269],"type":"bar","name":"chips pretzels","marker":{"color":"rgba(132,212,75,1)","line":{"color":"rgba(132,212,75,1)"}},"textfont":{"color":"rgba(132,212,75,1)"},"error_y":{"color":"rgba(132,212,75,1)"},"error_x":{"color":"rgba(132,212,75,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["milk"],"y":[32644],"type":"bar","name":"milk","marker":{"color":"rgba(148,216,64,1)","line":{"color":"rgba(148,216,64,1)"}},"textfont":{"color":"rgba(148,216,64,1)"},"error_y":{"color":"rgba(148,216,64,1)"},"error_x":{"color":"rgba(148,216,64,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["water seltzer sparkling water"],"y":[36617],"type":"bar","name":"water seltzer sparkling water","marker":{"color":"rgba(166,219,53,1)","line":{"color":"rgba(166,219,53,1)"}},"textfont":{"color":"rgba(166,219,53,1)"},"error_y":{"color":"rgba(166,219,53,1)"},"error_x":{"color":"rgba(166,219,53,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["packaged cheese"],"y":[41699],"type":"bar","name":"packaged cheese","marker":{"color":"rgba(184,222,41,1)","line":{"color":"rgba(184,222,41,1)"}},"textfont":{"color":"rgba(184,222,41,1)"},"error_y":{"color":"rgba(184,222,41,1)"},"error_x":{"color":"rgba(184,222,41,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["yogurt"],"y":[55240],"type":"bar","name":"yogurt","marker":{"color":"rgba(202,225,31,1)","line":{"color":"rgba(202,225,31,1)"}},"textfont":{"color":"rgba(202,225,31,1)"},"error_y":{"color":"rgba(202,225,31,1)"},"error_x":{"color":"rgba(202,225,31,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["packaged vegetables fruits"],"y":[78493],"type":"bar","name":"packaged vegetables fruits","marker":{"color":"rgba(220,227,24,1)","line":{"color":"rgba(220,227,24,1)"}},"textfont":{"color":"rgba(220,227,24,1)"},"error_y":{"color":"rgba(220,227,24,1)"},"error_x":{"color":"rgba(220,227,24,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["fresh fruits"],"y":[150473],"type":"bar","name":"fresh fruits","marker":{"color":"rgba(237,229,27,1)","line":{"color":"rgba(237,229,27,1)"}},"textfont":{"color":"rgba(237,229,27,1)"},"error_y":{"color":"rgba(237,229,27,1)"},"error_x":{"color":"rgba(237,229,27,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["fresh vegetables"],"y":[150609],"type":"bar","name":"fresh vegetables","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
