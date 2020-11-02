@@ -19,6 +19,15 @@ data("instacart")
 
 ```{r}
 instacart %>% 
+  count(order_dow, aisle) %>%
+  filter(n > 3000) %>%
+  rename(number_of_orders = n, day_of_week = order_dow) %>%
+  mutate(day_of_week = as.character(day_of_week)) %>% 
+  plot_ly(x = ~day_of_week, y = ~number_of_orders, color = ~ aisle, type = "scatter", mode = "line", colors = "viridis")
+```
+
+```{r}
+instacart %>% 
   count(aisle) %>% 
   filter(n > 10000) %>% 
   mutate( 
