@@ -24,7 +24,7 @@ library(plotly)
 data("instacart")
 ```
 
-### Chart A
+### Day of week and the number of orders in each aisles on that day
 
 ```{r}
 instacart %>% 
@@ -38,7 +38,7 @@ instacart %>%
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Number of orders by aisles
 
 ```{r}
 instacart %>% 
@@ -51,7 +51,7 @@ instacart %>%
   plot_ly(x = ~aisle, y = ~n, color = ~aisle, type = "bar", colors = "viridis")
 ```
 
-### Chart C
+### The distribution of order time of the day by department
 
 ```{r}
 instacart %>% 
