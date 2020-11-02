@@ -5,7 +5,7 @@ output:
     toc: true
     toc_float: true
 ---
-I am an international student from Beijing, China. My given name is Jiayi, while you are welcome to call me Helen. I have been using this English name since Kindergarten, and it was given by my first English teacher. I came to the state four years ago for my undergraduate school, and it has been an amazing adventure for me.
+I am an international student from Beijing, China. My given name is Jiayi, while you are welcome to call me Helen. This English name has been with me since Kindergarten. I came to the state four years ago for my undergraduate study, and it has been an amazing adventure for me.
 
 In my free time, I love to cover songs. Here is my insta account where I randomly post my covers and share my life. Please feel free to browse through:
 
