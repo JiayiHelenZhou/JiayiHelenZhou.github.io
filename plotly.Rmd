@@ -37,3 +37,24 @@ instacart %>%
   plot_ly(x = ~aisle, y = ~n, color = ~aisle, type = "bar", colors = "viridis")
 ```
 
+```{r}
+instacart %>% 
+  sample_n(size = 1000) %>%
+  filter(reordered == "1",
+         department == "produce") %>% 
+  select(add_to_cart_order,order_number,days_since_prior_order, product_name, department) %>% 
+  mutate(order_number = as.character(order_number),
+         text_label = str_c("Order Number: ", order_number,
+                            "\nProduct Name: ", product_name)) %>%
+  plot_ly(x = ~days_since_prior_order, y = ~add_to_cart_order, type = "scatter", mode = "markers",color = ~product_name, colors = "viridis", text = ~text_label, alpha = 0.5)
+```
+
+```{r}
+instacart %>% 
+  sample_n(size = 1000) %>%
+  select(order_number,order_hour_of_day, product_name, department) %>%
+  filter(department != "other") %>% 
+  mutate(department = fct_reorder(department, order_hour_of_day)) %>%
+  plot_ly(y = ~order_hour_of_day, color = ~department, type = "box", colors = "viridis")
+```
+
