@@ -6,8 +6,6 @@ output:
     toc_float: true
 ---
 
-Here is my Resume:
-
 <embed src="Resume.Jiayi Zhou.pdf" width="600px" height="700px" />
 
 
